@@ -1,0 +1,17 @@
+## idea 的目录
+.idea/
+
+*.class
+
+*.jar
+*.war
+*.ear
+
+.gradle
+build/
+**/build/
+logs/
+
+**/test/resources/
+
+**/zip

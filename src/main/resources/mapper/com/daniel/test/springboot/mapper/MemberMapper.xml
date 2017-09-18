@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.daniel.test.springboot.mapper.MemberMapper">
+    <resultMap id="MemberMap" type="com.daniel.test.springboot.entity.Member">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="loginName" property="loginName" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="selectMemberById" resultMap="MemberMap" >
+        SELECT id, loginName FROM member WHERE id = #{id}
+    </select>
+
+</mapper>

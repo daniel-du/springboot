@@ -40,3 +40,41 @@ dependencies{
             [group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: springBootVersion]
     )
 }
+
+// 项目依赖包拷贝
+task copyDependency(type : Copy){
+    from configurations.compile
+    into "$buildDir/output/dependency"
+}
+def copyMainClass = copySpec{
+    from ("$buildDir/classes/main")
+    into "classes"
+}
+def  copyAllLib = copySpec{
+    from ("$buildDir/output/dependency")
+    into "lib"
+}
+def  copyConf = copySpec{
+    from (sourceSets.main.resources.srcDirs){
+        include "*.conf"
+        include "*.xml"
+        include "*.txt"
+        include "templates/**"
+        include "*.properties"
+    }
+    into "conf"
+}
+def  copyBin = copySpec{
+    from("package/bin"){
+        include "*.sh"
+    }
+}
+// 打包
+task zipProject(type:Zip, dependsOn : [jar, copyDependency] ){
+    with copyAllLib
+    with copyMainClass
+    with copyConf
+    with copyBin
+    into "caijinquan-release"
+    destinationDir = file("zip")
+}

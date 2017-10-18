@@ -24,6 +24,7 @@ dependencies{
             [group: 'org.springframework.boot', name: 'spring-boot-starter', version: springBootVersion],
             [group: 'org.springframework.boot', name: 'spring-boot-starter-aop', version: springBootVersion],
             [group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: springBootVersion],
+            [group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version: springBootVersion],
             [group: 'org.springframework.boot', name: 'spring-boot-configuration-processor', version: springBootVersion],
             // 数据库连接
             [group: 'org.mybatis.spring.boot', name: 'mybatis-spring-boot-starter', version: '1.1.1'],
@@ -35,11 +36,28 @@ dependencies{
             [group: 'joda-time', name: 'joda-time', version: '2.9'],
             [group: 'com.alibaba', name: 'fastjson', version: '1.2.7'],
             [group: 'org.apache.commons', name: 'commons-lang3', version: '3.3.2'],
+            [group: 'commons-io', name: 'commons-io', version: '2.4'],
+            [group: 'commons-codec', name: 'commons-codec', version: '1.10'],
+            [group: 'commons-fileupload', name: 'commons-fileupload', version: '1.2.2'],
     )
     testCompile(
             [group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: springBootVersion]
     )
 }
+// jar 打包测试---测试结果失败
+//jar{
+//    manifest{
+//        attributes 'Main-Class' : 'com.daniel.test.springboot.SpringBootTestApplication'
+//    }
+//}
+//jar {
+//    String classPath = ''
+//    configurations.runtime.each {classPath = classPath + " lib\\"+it.name}
+//    manifest {
+//        attributes 'Main-Class': 'com.daniel.test.springboot.SpringBootTestApplication'
+//        attributes 'Class-Path': classPath
+//    }
+//}
 
 // 项目依赖包拷贝
 task copyDependency(type : Copy){
@@ -65,8 +83,8 @@ def  copyConf = copySpec{
     into "conf"
 }
 def  copyBin = copySpec{
-    from("package/bin"){
-        include "*.sh"
+    from("package"){
+        include "bin/*.sh"
     }
 }
 // 打包
@@ -75,6 +93,6 @@ task zipProject(type:Zip, dependsOn : [jar, copyDependency] ){
     with copyMainClass
     with copyConf
     with copyBin
-    into "caijinquan-release"
+    into "springboot"
     destinationDir = file("zip")
 }

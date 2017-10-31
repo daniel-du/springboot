@@ -4,6 +4,7 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * <p>项目启动位置</p>
@@ -11,6 +12,7 @@ import org.springframework.context.annotation.ComponentScan;
  * @author Daniel_Du
  * @since 2017/9/15 17:00
  */
+@Transactional
 @SpringBootApplication
 @ComponentScan(basePackages = "com.daniel.test.springboot")
 @MapperScan(basePackages = "com.daniel.test.springboot.mapper")
